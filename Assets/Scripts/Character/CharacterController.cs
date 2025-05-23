@@ -169,7 +169,9 @@ public class CharacterController : MonoBehaviour
         
         HandleJumpInput();
         HandleDashInput();
-        
+        HandleAttackInput();
+
+
         UpdateCharacterState();
     }
 
@@ -190,6 +192,31 @@ public class CharacterController : MonoBehaviour
     #endregion
 
     #region Input Handling
+
+    private void HandleAttackInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Z)) // Saldırı tuşu
+        {
+            Vector2 attackDirection = facingRight ? Vector2.right : Vector2.left;
+            float attackRange = 1f; // menzil
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, attackDirection, attackRange, LayerMask.GetMask("Enemy"));
+
+            Debug.DrawRay(transform.position, attackDirection * attackRange, Color.yellow, 0.2f);
+
+            if (hit.collider != null)
+            {
+                // Düşman bulundu
+                EnemyHealth enemy = hit.collider.GetComponent<EnemyHealth>();
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(1); // 1 hasar veriyoruz
+                    Debug.Log("Enemy hit!");
+                }
+            }
+        }
+    }
+
 
     private void GetInput()
     {
@@ -742,7 +769,7 @@ public class CharacterController : MonoBehaviour
     }
 
     #endregion
-    
+
 }
 
 // Karakter durumlarını tanımlayan enum
