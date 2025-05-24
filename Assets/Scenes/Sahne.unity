@@ -237,6 +237,8 @@ GameObject:
   - component: {fileID: 385059507}
   - component: {fileID: 385059506}
   - component: {fileID: 385059505}
+  - component: {fileID: 385059510}
+  - component: {fileID: 385059511}
   m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
@@ -320,36 +322,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   jumpForce: 5
-  acceleration: 50
-  deceleration: 50
-  airControlMultiplier: 0.7
   groundCheck: {fileID: 1588045909}
   groundCheckRadius: 0.1
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  coyoteTime: 0.1
-  jumpBufferTime: 0.2
-  fallMultiplier: 2.5
-  lowJumpMultiplier: 2
-  maxAirJumps: 0
-  wallCheckPoint: {fileID: 0}
-  wallCheckDistance: 0.2
-  wallSlideSpeed: 1
-  wallJumpForce: 10
-  wallJumpDirection: {x: 1, y: 2}
-  wallJumpTime: 0.15
-  dashSpeed: 20
-  dashTime: 0.2
-  dashCooldown: 1
-  dashTrail: {fileID: 0}
-  maxHealth: 100
-  invincibilityTime: 1
-  showDamageFlash: 1
-  damageFlashColor: {r: 1, g: 0, b: 0, a: 1}
-  flashDuration: 0.1
-  spriteRenderer: {fileID: 0}
-  healthBar: {fileID: 1211275895}
+  currentWeapon: {fileID: 0}
+  textMesh: {fileID: 0}
 --- !u!212 &385059508
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -416,8 +395,43 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1588045909}
+  - {fileID: 2063324873}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &385059510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385059504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff1f564cbf1c08f448b2085457d7b4b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  healthBar: {fileID: 1211275895}
+--- !u!114 &385059511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 385059504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4b4b8c042e04cb8afe02d82716a5001, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponName: Bow
+  damage: 2
+  attackSpeed: 1
+  range: 0
+  arrowPrefab: {fileID: 0}
+  firePoint: {fileID: 0}
+  arrowSpeed: 20
 --- !u!1001 &567192392
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1180,6 +1194,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2063324872
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2063324873}
+  m_Layer: 7
+  m_Name: firePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2063324873
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2063324872}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 385059509}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
