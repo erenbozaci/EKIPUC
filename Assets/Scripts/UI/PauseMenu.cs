@@ -7,7 +7,6 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject pauseMenuUI;
     public CanvasGroup mainCanvas;
-    public CanvasGroup bossCanvas;
 
     // Update is called once per frame
     void Update()
@@ -31,9 +30,6 @@ public class PauseMenu : MonoBehaviour
         mainCanvas.alpha = 1f;
         mainCanvas.interactable = true;
         mainCanvas.blocksRaycasts = true;
-        bossCanvas.alpha = 1f;
-        bossCanvas.interactable = true;
-        bossCanvas.blocksRaycasts = true;
         Time.timeScale = 1f;
         GameIsPaused = false;
     }
@@ -44,9 +40,6 @@ public class PauseMenu : MonoBehaviour
         mainCanvas.alpha = 0f;
         mainCanvas.interactable = false;
         mainCanvas.blocksRaycasts = false;
-        bossCanvas.alpha = 0f;
-        bossCanvas.interactable = false;
-        bossCanvas.blocksRaycasts = false;
         Time.timeScale = 0f;
         GameIsPaused = true;
     }
