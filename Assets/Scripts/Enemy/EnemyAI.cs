@@ -21,19 +21,54 @@ public class EnemyAI : MonoBehaviour
     private Animator anim;
     private bool movingRight = true;
     private float lastAttackTime;
+    private GrabbableObject grabCheck;
+    private bool isStunned = false;
+    [SerializeField] private float stunDuration = 1.5f;
+    private float stunTimer = 5f;
+
+
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        grabCheck = GetComponent<GrabbableObject>();
+
+        if (grabCheck != null)
+        {
+            grabCheck.OnReleased += StunAfterGrab;
+            Debug.Log($"{gameObject.name} event'e baðlandý!");
+        }
+
     }
 
     void Update()
     {
+        if (grabCheck != null && grabCheck.isGrabbed)
+        {
+            
+            anim.SetBool("isWalking", false);
+            return;
+        }
+
+        if (isStunned)
+        {
+            stunTimer -= Time.deltaTime;
+            
+            anim.SetBool("isWalking", false);
+
+            if (stunTimer <= 0f)
+            {
+                isStunned = false;
+                Debug.Log($"{gameObject.name} toparlandý.");
+            }
+            return;
+        }
+
         if (isAttacking)
         {
-            rb.velocity = Vector2.zero; // Garantili duruþ
+            
             return; // saldýrý bitmeden baþka hareket yapma
         }
 
@@ -41,7 +76,7 @@ public class EnemyAI : MonoBehaviour
 
         if (distanceToPlayer < attackRange)
         {
-            rb.velocity = Vector2.zero;
+            
             Attack();
         }
         else if (distanceToPlayer < detectionRange)
@@ -92,7 +127,7 @@ public class EnemyAI : MonoBehaviour
     private System.Collections.IEnumerator AttackPause()
     {
         isAttacking = true;
-        rb.velocity = Vector2.zero;
+        
 
         yield return new WaitForSeconds(attackPauseDuration);
 
@@ -109,7 +144,26 @@ public class EnemyAI : MonoBehaviour
     public void Die()
     {
         anim.SetTrigger("die");
-        rb.velocity = Vector2.zero;
+        
         Destroy(gameObject, 0.5f);
     }
+
+    private void StunAfterGrab()
+    {
+        Debug.Log($"{gameObject.name} sersemledi!");
+        isStunned = true;
+        stunTimer = stunDuration;
+    }
+
+    void OnDestroy()
+    {
+        if (grabCheck != null)
+            grabCheck.OnReleased -= StunAfterGrab;
+    }
+
+    public bool IsStunned()
+    {
+        return isStunned;
+    }
+
 }
