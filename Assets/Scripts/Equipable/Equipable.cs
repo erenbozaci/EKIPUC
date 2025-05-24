@@ -22,6 +22,7 @@ public abstract class Equipable : MonoBehaviour
 
     void onCollisionEnter(Collision collision)
     {
+        //A
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
