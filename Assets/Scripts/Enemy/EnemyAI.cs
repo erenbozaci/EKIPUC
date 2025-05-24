@@ -14,6 +14,8 @@ public class EnemyAI : MonoBehaviour
     public float attackRange = 1f;
     public float attackCooldown = 1.5f;
 
+    [SerializeField] private float attackPauseDuration = 1f; // Saldýrý sonrasý bekleme süresi
+    private bool isAttacking = false; // Saldýrý sýrasýnda mý?
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private Animator anim;
@@ -29,6 +31,12 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
+        if (isAttacking)
+        {
+            rb.velocity = Vector2.zero; // Garantili duruþ
+            return; // saldýrý bitmeden baþka hareket yapma
+        }
+
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
         if (distanceToPlayer < attackRange)
@@ -45,6 +53,7 @@ public class EnemyAI : MonoBehaviour
             Patrol();
         }
     }
+
 
     void Patrol()
     {
@@ -75,9 +84,21 @@ public class EnemyAI : MonoBehaviour
         {
             lastAttackTime = Time.time;
             anim.SetTrigger("attack");
-            // Hasar verme kaldýrýldý
+
+            StartCoroutine(AttackPause()); // saldýrý süresi boyunca dur
         }
     }
+
+    private System.Collections.IEnumerator AttackPause()
+    {
+        isAttacking = true;
+        rb.velocity = Vector2.zero;
+
+        yield return new WaitForSeconds(attackPauseDuration);
+
+        isAttacking = false;
+    }
+
 
     void Flip()
     {
