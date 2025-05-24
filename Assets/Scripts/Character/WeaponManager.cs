@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Character
@@ -5,10 +6,10 @@ namespace Character
     public class WeaponManager : MonoBehaviour
     {
         [Header("Weapon Settings")]
-        [SerializeField] private WeaponAbstract currentWeapon;
+        [SerializeField] private GameObject currentWeapon;
         [SerializeField] private Transform weaponHolder;
 
-        public WeaponAbstract CurrentWeapon => currentWeapon;
+        public GameObject CurrentWeapon => currentWeapon;
         
         public static WeaponManager Instance { get; private set; }
 
@@ -24,13 +25,26 @@ namespace Character
             }
         }
 
-        public void EquipWeapon(WeaponEquipable weaponEquipable)
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                DestroyWeapon();
+            } 
+            else if (Input.GetMouseButtonDown(0))
+            {
+                Attack();
+            }
+        }
+
+        public void EquipWeapon(GameObject weaponPrefab)
         {
             if (currentWeapon != null)
             {
                 Destroy(currentWeapon.gameObject);
             }
-            currentWeapon = Instantiate(weaponEquipable.getWeapon(), weaponHolder.position, weaponHolder.rotation, weaponHolder);
+            
+            currentWeapon = Instantiate(weaponPrefab, weaponHolder.position, weaponHolder.rotation, weaponHolder);
         }
         
         public void DestroyWeapon()
@@ -42,11 +56,11 @@ namespace Character
             }
         }
 
-        public void Attack(Vector3 targetPosition)
+        public void Attack()
         {
             if (currentWeapon != null)
             {
-                currentWeapon.Attack(targetPosition);
+                currentWeapon.GetComponent<WeaponAbstract>().Attack(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             }
         }
     }

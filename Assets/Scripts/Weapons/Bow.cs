@@ -3,7 +3,6 @@ using UnityEngine;
 class Bow : WeaponAbstract
 {
     public GameObject arrowPrefab;
-    public Transform firePoint;
     public float arrowSpeed = 20f;
 
     void Start()
@@ -12,25 +11,21 @@ class Bow : WeaponAbstract
         {
             Debug.LogError("Arrow Prefab is not assigned in Bow script.");
         }
-        if (firePoint == null)
-        {
-            Debug.LogError("Fire Point is not assigned in Bow script.");
-        }
     }
 
     public override void Attack(Vector3 targetPosition)
     {
-        if (arrowPrefab == null || firePoint == null)
+        if (arrowPrefab == null)
         {
             Debug.LogError("Arrow Prefab or Fire Point is not set.");
             return;
         }
 
-        GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
+        GameObject arrow = Instantiate(arrowPrefab, targetPosition, Quaternion.identity);
         Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            Vector2 direction = (targetPosition - firePoint.position).normalized;
+            Vector2 direction = (targetPosition).normalized;
             rb.velocity = direction * arrowSpeed;
         }
         else

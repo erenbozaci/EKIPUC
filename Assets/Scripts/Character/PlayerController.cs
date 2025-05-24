@@ -1,3 +1,5 @@
+using System;
+using Character;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -19,9 +21,10 @@ public class PlayerController : MonoBehaviour, IEntity
     private float knockbackTimer = 0f;
 
     private PlayerHealth playerHealth; // Health system variable
+    
+    private BoxCollider2D z_BoxCollider;
 
-    public WeaponAbstract currentWeapon;
-    public TMPro.TextMeshPro textMesh;
+    [SerializeField] public GameObject InteractKeySprite;
     
     private void Awake()
     {
@@ -88,6 +91,7 @@ public class PlayerController : MonoBehaviour, IEntity
         scaler.x *= -1;
         transform.localScale = scaler;
     }
+    
 
     void OnDrawGizmosSelected()
     {
@@ -139,71 +143,6 @@ public class PlayerController : MonoBehaviour, IEntity
         Debug.Log("Attack at " + targetPosition);
     }
     
-    public void EquipWeapon(WeaponAbstract weapon)
-    {
-        if (currentWeapon != null)
-        {
-            return;
-        }
-        
-        currentWeapon = weapon;
-        Debug.Log("Equipped weapon: " + currentWeapon.weaponName);
-    }
-    public void IsEquipped(WeaponEquipable weapon)
-    {
-        if (weapon != null)
-        {
-            currentWeapon = weapon.getWeapon();
-            if (currentWeapon != null)
-            {
-                Debug.Log("Weapon equipped: " + currentWeapon.weaponName);
-            }
-            else
-            {
-                Debug.LogError("WeaponAbstract bileşeni bulunamadı!");
-            }
-        }
-        else
-        {
-            Debug.LogError("WeaponEquipable bileşeni null!");
-        }
-    }
-    
-    public void showTextMesh()
-    {
-        if (textMesh != null)
-        {
-            textMesh.gameObject.SetActive(true);
-        }
-        else
-        {
-            Debug.LogError("TextMeshPro bileşeni Player üzerinde bulunamadı!");
-        }
-    }
-    
-    public void hideTextMesh()
-    {
-        if (textMesh != null)
-        {
-            textMesh.gameObject.SetActive(false);
-        }
-        else
-        {
-            Debug.LogError("TextMeshPro bileşeni Player üzerinde bulunamadı!");
-        }
-    }
-    
-    public void setPlayerText(string text)
-    {
-        if (textMesh != null)
-        {
-            textMesh.text = text;
-        }
-        else
-        {
-            Debug.LogError("TextMeshPro bileşeni Player üzerinde bulunamadı!");
-        }
-    }
 
     public void ApplyKnockback(Vector2 force, float duration)
     {
