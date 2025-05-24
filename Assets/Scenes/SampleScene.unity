@@ -240,7 +240,7 @@ Transform:
   m_GameObject: {fileID: 749274407}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.04245063}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -459,37 +459,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &1558294258
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1558294259}
-  m_Layer: 7
-  m_Name: Weapon
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1558294259
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1558294258}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.492, y: -0.154, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1621334421}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1621334420
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,9 +472,10 @@ GameObject:
   - component: {fileID: 1621334423}
   - component: {fileID: 1621334422}
   - component: {fileID: 1621334426}
-  - component: {fileID: 1621334427}
   - component: {fileID: 1621334428}
   - component: {fileID: 1621334429}
+  - component: {fileID: 1621334430}
+  - component: {fileID: 1621334431}
   m_Layer: 7
   m_Name: Character
   m_TagString: Player
@@ -522,14 +492,13 @@ Transform:
   m_GameObject: {fileID: 1621334420}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.48394436, y: 0.1333291, z: 0.04245063}
+  m_LocalPosition: {x: -0.48394436, y: -0.15, z: 0.04245063}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 749274408}
   - {fileID: 750630350}
   - {fileID: 1797428484}
-  - {fileID: 1558294259}
   - {fileID: 1948366892}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -667,20 +636,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1621334427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1621334420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19415f28b9684e13adc3cf5f4043eb0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentWeapon: {fileID: 0}
-  weaponHolder: {fileID: 1558294259}
 --- !u!114 &1621334428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -713,7 +668,39 @@ MonoBehaviour:
   pickableLayer:
     serializedVersion: 2
     m_Bits: 8
-  rayOrigin: {fileID: 1558294259}
+  rayOrigin: {fileID: 0}
+--- !u!114 &1621334430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621334420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aa5c37912884dc4aad3e3be15dab38e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitEffectPrefab: {fileID: 0}
+  shootEffectPrefab: {fileID: 0}
+  shootSound: {fileID: 0}
+  hitSound: {fileID: 0}
+  audioSource: {fileID: 0}
+  mainCamera: {fileID: 519420031}
+  shakeDuration: 0.1
+  shakeMagnitude: 0.1
+--- !u!114 &1621334431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621334420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 003994a7a0dd63b459ede20809df75b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1754690020
 GameObject:
   m_ObjectHideFlags: 0
@@ -726,7 +713,6 @@ GameObject:
   - component: {fileID: 1754690022}
   - component: {fileID: 1754690024}
   - component: {fileID: 1754690025}
-  - component: {fileID: 1754690026}
   m_Layer: 3
   m_Name: BowEquipable
   m_TagString: Pickable
@@ -873,22 +859,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1754690026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1754690020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b4a2ef4f8274933913e9952862864ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponName: Bow
-  attackRange: 2
-  damage: 10
-  attackCooldown: 1
 --- !u!1 &1797428483
 GameObject:
   m_ObjectHideFlags: 0
