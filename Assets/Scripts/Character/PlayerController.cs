@@ -14,7 +14,10 @@ public class PlayerController : MonoBehaviour, IEntity
     private float moveInput;
     private bool isGrounded;
     private bool facingRight = true;
-    
+    private bool movementLocked = false;
+    private float knockbackDuration = 0.2f;
+    private float knockbackTimer = 0f;
+
     private PlayerHealth playerHealth; // Health system variable
 
     public WeaponAbstract currentWeapon;
@@ -200,5 +203,14 @@ public class PlayerController : MonoBehaviour, IEntity
         {
             Debug.LogError("TextMeshPro bileşeni Player üzerinde bulunamadı!");
         }
+    }
+
+    public void ApplyKnockback(Vector2 force, float duration)
+    {
+        rb.velocity = Vector2.zero;
+        rb.AddForce(force, ForceMode2D.Impulse);
+        movementLocked = true;
+        knockbackDuration = duration;
+        knockbackTimer = duration;
     }
 }
