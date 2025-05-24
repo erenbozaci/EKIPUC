@@ -12,7 +12,7 @@ public abstract class EntityHealth : MonoBehaviour, IEntity
     public int CurrentHealth => currentHealth;
     
 
-    public virtual void TakeDamage(int damage)
+    public virtual bool TakeDamage(int damage)
     {
         currentHealth -= damage;
         if (currentHealth <= 0)

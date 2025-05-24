@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class CharacterHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     public int currentHealth;
@@ -19,7 +19,7 @@ public class CharacterHealth : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer == null)
         {
-            Debug.LogError("SpriteRenderer bileþeni Character üzerinde bulunamadý!");
+            Debug.LogError("SpriteRenderer bileï¿½eni Character ï¿½zerinde bulunamadï¿½!");
         }
 
         if (healthBar != null)
