@@ -13,7 +13,7 @@ public enum EntityState
 
 public interface IEntity 
 {
-    void TakeDamage(int damage);
+    bool TakeDamage(int damage);
     void Heal(int amount);
     void Die();
     void Move(Vector3 direction);
