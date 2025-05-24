@@ -20,7 +20,7 @@ public class Potion
 }
 public class PlayerPotionManager : MonoBehaviour
 {
-    public PlayerPotionManager Instance;
+    public static PlayerPotionManager Instance;
     public List<Potion> usingPotions = new List<Potion>();
     
     private void Awake()
@@ -50,7 +50,6 @@ public class PlayerPotionManager : MonoBehaviour
     public void UsePotion(Potion potion)
     {
         usingPotions.Add(potion);
-        // wait for the duration of the potion effect
         StartCoroutine(WaitForPotionDuration(potion));
     }
     
