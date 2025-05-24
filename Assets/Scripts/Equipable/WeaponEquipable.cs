@@ -24,4 +24,17 @@ public abstract class WeaponEquipable : Equipable
     {
         WeaponManager.Instance.DestroyWeapon();
     }
+
+    public WeaponAbstract getWeapon()
+    {
+        if (GetComponent<WeaponAbstract>() != null)
+        {
+            return GetComponent<WeaponAbstract>();
+        }
+        else
+        {
+            Debug.LogError("WeaponAbstract bileşeni bu silah üzerinde bulunamadı!");
+            return null;
+        }
+    }
 }

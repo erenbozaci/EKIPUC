@@ -5,10 +5,10 @@ namespace Character
     public class WeaponManager : MonoBehaviour
     {
         [Header("Weapon Settings")]
-        [SerializeField] private WeaponEquipable currentWeapon;
+        [SerializeField] private WeaponAbstract currentWeapon;
         [SerializeField] private Transform weaponHolder;
 
-        public WeaponEquipable CurrentWeapon => currentWeapon;
+        public WeaponAbstract CurrentWeapon => currentWeapon;
         
         public static WeaponManager Instance { get; private set; }
 
@@ -22,16 +22,15 @@ namespace Character
             {
                 Destroy(gameObject);
             }
-            EquipWeapon(currentWeapon);
         }
 
-        public void EquipWeapon(WeaponEquipable newWeapon)
+        public void EquipWeapon(WeaponEquipable weaponEquipable)
         {
             if (currentWeapon != null)
             {
                 Destroy(currentWeapon.gameObject);
             }
-            currentWeapon = Instantiate(newWeapon, weaponHolder.position, weaponHolder.rotation, weaponHolder);
+            currentWeapon = Instantiate(weaponEquipable.getWeapon(), weaponHolder.position, weaponHolder.rotation, weaponHolder);
         }
         
         public void DestroyWeapon()

@@ -7,7 +7,7 @@ public abstract class WeaponAbstract : MonoBehaviour
     public float attackSpeed;
     public float range;
     
-    public abstract void Attack();
+    public abstract void Attack(Vector3 targetPosition);
     
     public virtual void DisplayInfo()
     {

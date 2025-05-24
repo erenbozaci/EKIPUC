@@ -18,20 +18,24 @@ class Bow : WeaponAbstract
         }
     }
 
-    public override void Attack()
+    public override void Attack(Vector3 targetPosition)
     {
-        if (arrowPrefab != null && firePoint != null)
+        if (arrowPrefab == null || firePoint == null)
         {
-            GameObject arrow = Instantiate(arrowPrefab, firePoint.position, firePoint.rotation);
-            Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
-            if (rb != null)
-            {
-                rb.velocity = firePoint.right * arrowSpeed;
-            }
-            else
-            {
-                Debug.LogError("Arrow prefab does not have a Rigidbody2D component.");
-            }
+            Debug.LogError("Arrow Prefab or Fire Point is not set.");
+            return;
+        }
+
+        GameObject arrow = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
+        Rigidbody2D rb = arrow.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            Vector2 direction = (targetPosition - firePoint.position).normalized;
+            rb.velocity = direction * arrowSpeed;
+        }
+        else
+        {
+            Debug.LogError("Arrow prefab does not have a Rigidbody2D component.");
         }
     }
 

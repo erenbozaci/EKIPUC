@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(CharacterHealth))]
+[RequireComponent(typeof(PlayerHealth))]
 public class PlayerController : MonoBehaviour, IEntity
 {
     public float moveSpeed = 5f;
@@ -15,12 +15,15 @@ public class PlayerController : MonoBehaviour, IEntity
     private bool isGrounded;
     private bool facingRight = true;
     
-    private CharacterHealth characterHealth; // Health system variable
+    private PlayerHealth playerHealth; // Health system variable
+
+    public WeaponAbstract currentWeapon;
+    public TMPro.TextMeshPro textMesh;
     
     private void Awake()
     {
-        characterHealth = GetComponent<CharacterHealth>();
-        if (characterHealth == null)
+        playerHealth = GetComponent<PlayerHealth>();
+        if (playerHealth == null)
         {
             Debug.LogError("CharacterHealth bileşeni Player üzerinde bulunamadı!");
         }
@@ -94,9 +97,9 @@ public class PlayerController : MonoBehaviour, IEntity
 
     public void TakeDamage(int damage)
     {
-        if (characterHealth != null)
+        if (playerHealth != null)
         {
-            characterHealth.TakeDamage(damage);
+            playerHealth.TakeDamage(damage);
         }
         else
         {
@@ -106,9 +109,9 @@ public class PlayerController : MonoBehaviour, IEntity
 
     public void Heal(int amount)
     {
-        if (characterHealth != null)
+        if (playerHealth != null)
         {
-             characterHealth.Heal(amount);
+             playerHealth.Heal(amount);
         }
         else
         {
@@ -129,5 +132,71 @@ public class PlayerController : MonoBehaviour, IEntity
     {
         // Attack logic here
         Debug.Log("Attack at " + targetPosition);
+    }
+    
+    public void EquipWeapon(WeaponAbstract weapon)
+    {
+        if (currentWeapon != null)
+        {
+            return;
+        }
+        
+        currentWeapon = weapon;
+        Debug.Log("Equipped weapon: " + currentWeapon.weaponName);
+    }
+    public void IsEquipped(WeaponEquipable weapon)
+    {
+        if (weapon != null)
+        {
+            currentWeapon = weapon.getWeapon();
+            if (currentWeapon != null)
+            {
+                Debug.Log("Weapon equipped: " + currentWeapon.weaponName);
+            }
+            else
+            {
+                Debug.LogError("WeaponAbstract bileşeni bulunamadı!");
+            }
+        }
+        else
+        {
+            Debug.LogError("WeaponEquipable bileşeni null!");
+        }
+    }
+    
+    public void showTextMesh()
+    {
+        if (textMesh != null)
+        {
+            textMesh.gameObject.SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("TextMeshPro bileşeni Player üzerinde bulunamadı!");
+        }
+    }
+    
+    public void hideTextMesh()
+    {
+        if (textMesh != null)
+        {
+            textMesh.gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("TextMeshPro bileşeni Player üzerinde bulunamadı!");
+        }
+    }
+    
+    public void setPlayerText(string text)
+    {
+        if (textMesh != null)
+        {
+            textMesh.text = text;
+        }
+        else
+        {
+            Debug.LogError("TextMeshPro bileşeni Player üzerinde bulunamadı!");
+        }
     }
 }
