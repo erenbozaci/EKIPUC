@@ -95,15 +95,17 @@ public class PlayerController : MonoBehaviour, IEntity
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
 
-    public void TakeDamage(int damage)
+    public bool TakeDamage(int damage)
     {
         if (playerHealth != null)
         {
             playerHealth.TakeDamage(damage);
+            return true;
         }
         else
         {
             Debug.LogError("CharacterHealth bileşeni bulunamadı!");
+            return false;
         }
     }
 

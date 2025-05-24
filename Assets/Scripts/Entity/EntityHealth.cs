@@ -19,6 +19,8 @@ public abstract class EntityHealth : MonoBehaviour, IEntity
         {
             Die();
         }
+
+        return true;
     }
 
     public virtual void Heal(int amount)
