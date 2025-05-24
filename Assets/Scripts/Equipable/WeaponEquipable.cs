@@ -6,15 +6,24 @@ public enum WeaponType
     BOW,
     SWORDSHIELD
 }
-public abstract class WeaponPickable : Pickable
+public abstract class WeaponEquipable : Equipable
 {
     [Header("Weapon Settings")]
-    public string weaponName = "Default Weapon";
     public float attackRange = 2f;
     public int damage = 10;
     public float attackCooldown = 1f;
 
-    
+    public abstract void Attack(Vector3 targetPosition);
+
+    public override void Equip(PlayerController character) // OnEquip yerine Equip olarak değiştirildi
+    {
+        WeaponManager.Instance.EquipWeapon(this);
+    }
+
+    public override void Unequip(PlayerController character) // OnUnequip yerine Unequip olarak değiştirildi
+    {
+        WeaponManager.Instance.DestroyWeapon();
+    }
 
     public WeaponAbstract getWeapon()
     {
@@ -27,18 +36,5 @@ public abstract class WeaponPickable : Pickable
             Debug.LogError("WeaponAbstract bileşeni bu silah üzerinde bulunamadı!");
             return null;
         }
-    }
-
-    public override void OnPick()
-    {
-        if (WeaponManager.Instance.CurrentWeapon != null)
-        {
-            return;
-        }
-        else
-        {
-            WeaponManager.Instance.EquipWeapon(gameObject);
-        }
-        
     }
 }
