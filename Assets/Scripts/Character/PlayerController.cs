@@ -1,6 +1,8 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CharacterHealth))]
+public class PlayerController : MonoBehaviour, IEntity
 {
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
@@ -12,7 +14,17 @@ public class PlayerController : MonoBehaviour
     private float moveInput;
     private bool isGrounded;
     private bool facingRight = true;
-
+    
+    private CharacterHealth characterHealth; // Health system variable
+    
+    private void Awake()
+    {
+        characterHealth = GetComponent<CharacterHealth>();
+        if (characterHealth == null)
+        {
+            Debug.LogError("CharacterHealth bileşeni Player üzerinde bulunamadı!");
+        }
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -78,5 +90,44 @@ public class PlayerController : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if (characterHealth != null)
+        {
+            characterHealth.TakeDamage(damage);
+        }
+        else
+        {
+            Debug.LogError("CharacterHealth bileşeni bulunamadı!");
+        }
+    }
+
+    public void Heal(int amount)
+    {
+        if (characterHealth != null)
+        {
+             characterHealth.Heal(amount);
+        }
+        else
+        {
+            Debug.LogError("CharacterHealth bileşeni bulunamadı!");
+        }
+    }
+
+    public void Die()
+    {
+        Destroy(this.gameObject);
+    }
+
+    public void Move(Vector3 direction)
+    {
+    }
+
+    public void Attack(Vector3 targetPosition)
+    {
+        // Attack logic here
+        Debug.Log("Attack at " + targetPosition);
     }
 }
