@@ -73,26 +73,14 @@ public class PlayerController : MonoBehaviour, IEntity
         {
             Flip();
         }
-
-        if (movementLocked)
-        {
-            knockbackTimer -= Time.deltaTime;
-            if (knockbackTimer <= 0f)
-            {
-                movementLocked = false;
-            }
-            return; // hareket inputlarını kilitle
-        }
-
     }
 
     void FixedUpdate()
     {
-        if (!movementLocked)
+        if (rb != null)
         {
             rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
         }
-
     }
 
     void Flip()
